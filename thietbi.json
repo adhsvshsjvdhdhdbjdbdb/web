@@ -1,28 +1,12 @@
  [
   {
-    "key": "binh",
-    "android_id": "4b46fddd26265d85",
-    "serial": "2c3297a1371d7ece",
-    "android_version": "10",
-    "manufacturer": "samsung",
-    "price": "90"
-  },
-  {
-  "key": "admin",
-  "android_id": "783a0a59147bb99c",
-  "serial": "427c8402",
+  "key": "thangle",
+  "android_id": "bb8ebf6ad297aa25",
+  "serial": "ZY22JB3W79",
   "android_version": "15",
-  "manufacturer": "Xiaomi",
-  "price": "300"
-  },
-  {
-    "key": "Bang",
-    "android_id": "710bfe9b133749f3",
-    "serial": "R52R70DH5BP",
-    "android_version": "14",
-    "manufacturer": "samsung",
-    "price": "300"
-  },
+  "manufacturer": "motorola",
+  "price": "100"
+},
   {
     "key": "GiaHuycube",
     "android_id": "f3c8da8d59cef62c",
