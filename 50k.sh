@@ -662,6 +662,9 @@ device_config put activity_manager fgs_start_denied_log_sample_rate 0
 settings put system ro.min.fling_velocity 25000
 settings put system ro.max.fling_velocity 25000
 settings put system speed_pointer 7
+settings put global window_animation_scale 0.5
+settings put global transition_animation_scale 0.5
+settings put global animator_duration_scale 0.5
 settings put system game-touchscreen-boost 1
 settings put system touch.pressure.scale 0.001
 settings put system touch_boost 1
