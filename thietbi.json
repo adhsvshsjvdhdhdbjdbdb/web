@@ -38,5 +38,13 @@
   "android_version": "15",
   "manufacturer": "Xiaomi",
   "price": "50"
+},
+  {
+  "key": "quanganhnguyen",
+  "android_id": "a5707e277e129c1a",
+  "serial": "8bcafc6b",
+  "android_version": "13",
+  "manufacturer": "Xiaomi",
+  "price": "50"
 }
 ]
