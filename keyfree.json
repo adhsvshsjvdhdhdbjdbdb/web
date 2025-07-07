@@ -1,10 +1,14 @@
 [
   {
-    "key": "Fix",
-    "link": ""
+    "name": "Super Gaming",
+    "version": "V1",
+    "key": "Ok",
+    "link": "https://raw.githubusercontent.com/adhsvshsjvdhdhdbjdbdb/Module/refs/heads/main/fix.sh"
   },
   {
-    "key": "Fix",
-    "link": ""
+   "name": "Delete Super Gaming",
+    "version": "V1",
+    "key": "Okk",
+    "link": "https://raw.githubusercontent.com/adhsvshsjvdhdhdbjdbdb/Module/refs/heads/main/fixx.sh"
   }
 ]
