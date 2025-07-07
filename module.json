@@ -8,5 +8,15 @@
    "name": "Zero",
     "version": "V2",
     "price": 50
+  },
+  {  
+   "name": "Delete Ultra",
+    "version": "V2",
+    "price": 0
+  },
+  {
+   "name": "Delete Zero",
+    "version": "V2",
+    "price": 0
   }
 ]
