@@ -30,5 +30,13 @@
   "android_version": "15",
   "manufacturer": "vivo",
   "price": "50"
+},
+  {
+  "key": "mh",
+  "android_id": "b398388dd637fbbf",
+  "serial": "RWJR9LROZXHYKFCU",
+  "android_version": "15",
+  "manufacturer": "Xiaomi",
+  "price": "50"
 }
 ]
