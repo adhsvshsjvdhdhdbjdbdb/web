@@ -293,6 +293,7 @@ main() {
 
 main
 # Suppress log tags
+log() {
 setprop log.tag.AF::MmapTrack SUPPRESS
 setprop log.tag.AF::OutputTrack SUPPRESS
 setprop log.tag.AF::PatchRecord SUPPRESS
@@ -691,8 +692,11 @@ setprop log.tag.trm_lib SUPPRESS
 setprop log.tag.wpfa_iptable_android SUPPRESS
 setprop log.tag.Networklogger SUPPRESS
 setprop log.tag.AudioFlinger::DeviceEffectProxy SUPPRESS
+}> /dev/null 2>&1  
+log
 echo "$PROGRESS_DIV Log Suppression Applied ${STICKER_PROGRESS}"
 # Performance props
+pe() {
 settings put system POWER_BALANCED_MODE_OPEN 0
 settings put system POWER_PERFORMANCE_MODE_OPEN 1
 settings put system POWER_SAVE_MODE_OPEN 0
@@ -713,8 +717,11 @@ setprop debug.sf.frame_rate_multiple_threshold 999
 setprop debug.sf.frame_rate_multiple_fences 999
 device_config put activity_manager fgs_start_allowed_log_sample_rate 0
 device_config put activity_manager fgs_start_denied_log_sample_rate 0
+}> /dev/null 2>&1  
+pe
 echo "$PROGRESS_DIV Performance Enhancements Applied ${STICKER_PROGRESS}"
 # Tối ưu hóa GPU
+gpu() {
 setprop debug.velocitytracker.alt 0
 setprop debug.tflite.trace 0
 setprop debug.adbd.logging 0
@@ -893,8 +900,11 @@ setprop debug.hwui.dynamic_resource_cache 1
 setprop debug.frame_rate_cap 1
 setprop debug.hwui.target_cpu_time_percent 100  
 setprop debug.hwui.target_gpu_time_percent 100  
+}> /dev/null 2>&1  
+gpu
 echo "$PROGRESS_DIV GPU Optimization Completed ${STICKER_PROGRESS}"
 # Kiểm soát nhiệt độ
+cpu() {
 setprop debug.gpu.cooling.callback_freq_limit 0
 setprop debug.cpu.cooling.callback_freq_limit 0    
 setprop debug.thermal.temperature.threshold 42  
@@ -911,6 +921,8 @@ setprop debug.thermal.management 1
 setprop debug.thermal.throttling 1
 setprop debug.thermal.temperature.threshold 40  
 settings put global performance_profile high_performance
+}> /dev/null 2>&1  
+cpu
 echo "$PROGRESS_DIV Thermal Management Configured ${STICKER_PROGRESS}"
 nhay() {    
 # Tối ưu hóa cảm ứng
@@ -1007,7 +1019,7 @@ for key in adservice_system_service_enabled cobalt_logging_enabled enable_logged
     fi
 done
 echo "$PROGRESS_DIV Background Services Optimized ${STICKER_PROGRESS}"
-game() { 
+{ 
 packages=(
   "com.garena.game.kgvn"
   "com.vng.speedvn"
