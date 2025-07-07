@@ -14,5 +14,21 @@
   "android_version": "13",
   "manufacturer": "Xiaomi",
   "price": "50"
+},
+  {
+  "key": "hai",
+  "android_id": "91942c218bdbd75a",
+  "serial": "81f4a9ee",
+  "android_version": "13",
+  "manufacturer": "Xiaomi",
+  "price": "100"
+},
+  {
+  "key": "duy",
+  "android_id": "8ede93c8209cce51",
+  "serial": "10CF591MMQ0024U",
+  "android_version": "15",
+  "manufacturer": "vivo",
+  "price": "50"
 }
 ]
