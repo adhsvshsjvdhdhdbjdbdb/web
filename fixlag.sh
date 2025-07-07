@@ -1046,7 +1046,7 @@ if [ -z "$dpi" ]; then
 fi
 width=$(echo "$size" | cut -d'x' -f1)
 height=$(echo "$size" | cut -d'x' -f2)
-compare=$(echo "$dpi <= 400" | bc)
+compare=$(echo "$dpi < 400" | bc)
 if [ "$compare" -eq 1 ]; then
   scale=1.1
   echo "🔧 Buff màn hình lên $scale"
