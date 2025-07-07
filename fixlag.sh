@@ -116,7 +116,7 @@ case $refresh_rate in
         exit 1
         ;;
 esac
-frame_time=$(awk "BEGIN {printf "%.0f", (1 / $refresh_rate) * 1000000000}")
+frame_time=$(awk "BEGIN {printf \"%.0f\", (1 / $refresh_rate) * 1000000000}")
 phazev1=$((frame_time / 8))
 phazev2=$((frame_time / 5))
 phazev3=$((frame_time / 3))
@@ -153,7 +153,7 @@ setprop debug.sf.early_phase_offset_ns "$phazev4"
 setprop debug.sf.region_sampling_timer_timeout_ns "$phazev7"
 setprop debug.sf.region_sampling_period_ns "$phazev6"
 setprop debug.sf.phase_offset_threshold_for_next_vsync_ns "$phazev6"
-service call SurfaceFlinger 1035 &>/dev/null 
+service call SurfaceFlinger 1035 &>/dev/null
 
 
 echo "$PROGRESS_DIV [4/5] Applied Display Optimization for ${refresh_rate}Hz ${STICKER_PROGRESS}"
