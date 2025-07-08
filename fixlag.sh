@@ -390,8 +390,8 @@ setprop log.tag.BluetoothPanService SUPPRESS
 setprop log.tag.BluetoothMapService SUPPRESS
 setprop log.tag.BluetoothPbapService SUPPRESS
 setprop log.tag.BluetoothSapService SUPPRESS
-}> /dev/null 2>&1  
-log
+}
+log > /dev/null 2>&1  
 echo "$PROGRESS_DIV Log Suppression Applied ${STICKER_PROGRESS}"
 # Performance props
 pe() {
@@ -415,8 +415,8 @@ setprop debug.sf.frame_rate_multiple_threshold 999
 setprop debug.sf.frame_rate_multiple_fences 999
 device_config put activity_manager fgs_start_allowed_log_sample_rate 0
 device_config put activity_manager fgs_start_denied_log_sample_rate 0
-}> /dev/null 2>&1  
-pe
+}
+pe > /dev/null 2>&1  
 echo "$PROGRESS_DIV Performance Enhancements Applied ${STICKER_PROGRESS}"
 # Tối ưu hóa GPU
 gpu() {
@@ -598,8 +598,9 @@ setprop debug.hwui.dynamic_resource_cache 1
 setprop debug.frame_rate_cap 1
 setprop debug.hwui.target_cpu_time_percent 100  
 setprop debug.hwui.target_gpu_time_percent 100  
-}> /dev/null 2>&1  
-gpu
+}
+gpu > /dev/null 2>&1  
+
 echo "$PROGRESS_DIV GPU Optimization Completed ${STICKER_PROGRESS}"
 # Kiểm soát nhiệt độ
 cpu() {
@@ -619,8 +620,9 @@ setprop debug.thermal.management 1
 setprop debug.thermal.throttling 1
 setprop debug.thermal.temperature.threshold 40  
 settings put global performance_profile high_performance
-}> /dev/null 2>&1  
-cpu
+}
+cpu > /dev/null 2>&1  
+
 echo "$PROGRESS_DIV Thermal Management Configured ${STICKER_PROGRESS}"
 nhay() {    
 # Tối ưu hóa cảm ứng
@@ -663,10 +665,11 @@ device_config put touchscreen input_drag_min_switch_speed 150
 device_config put systemui min_fling_velocity 25000
 device_config put systemui max_fling_velocity 25000
 device_config put input touch_screen_sample_interval_ms 2
-}> /dev/null 2>&1  
-nhay
+}
+nhay > /dev/null 2>&1  
 echo "$PROGRESS_DIV Touch Input Optimization Completed ${STICKER_PROGRESS}"
 # Tối ưu hóa chế độ chơi game   
+game() {
 settings put global game_driver_optimize_fps 1
 settings put global game_driver true
 cmd device_config put gpufreq boost 1
@@ -688,6 +691,8 @@ setprop debug.dexopt.install-bulk-secondary verify
 setprop debug.dexopt.install-bulk-secondary-downgraded extract
 setprop debug.dexoptinstall-Fast skip
 setprop debug.dexopt.post-boot extract
+}
+game > /dev/null 2>&1  
 for tag in system_server system_server/Subject data_app_wtf storage_trim SYSTEM_BOOT SYSTEM_AUDIT system_server_wtf SYSTEM_LAST_KMSG; do
     cmd dropbox add-low-priority "$tag"
 done
@@ -717,7 +722,7 @@ for key in adservice_system_service_enabled cobalt_logging_enabled enable_logged
     fi
 done
 echo "$PROGRESS_DIV Background Services Optimized ${STICKER_PROGRESS}"
-{ 
+tro() { 
 packages=(
   "com.garena.game.kgvn"
   "com.vng.speedvn"
@@ -735,7 +740,9 @@ for package in "${packages[@]}"; do
   cmd device_config put game_overlay "$package" mode=2,fps=120,useAngle=true
   cmd package compile -m speed-profile -f "$package"
 done
-}> /dev/null 2>&1  
+}
+tro > /dev/null 2>&1  
+buff() {
 size=$(wm size | grep -oE '[0-9]+x[0-9]+')
 dpi=$(wm density | grep -oE '[0-9]+')
 if [ -z "$dpi" ]; then
@@ -755,6 +762,8 @@ fi
 new_width=$(echo "$width * $scale" | bc | cut -d'.' -f1)
 new_height=$(echo "$height * $scale" | bc | cut -d'.' -f1)
 wm size ${new_width}x${new_height}
+}
+buff > /dev/null 2>&1  
 echo "✅ Kích thước màn hình đã đổi: ${new_width}x${new_height}"
 echo "$DIVIDER"
 echo "$STICKER_COMPLETION$(pad_text "OPTIMIZATION COMPLETED")"
