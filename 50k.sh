@@ -332,8 +332,9 @@ setprop log.tag.BluetoothPanService SUPPRESS
 setprop log.tag.BluetoothMapService SUPPRESS
 setprop log.tag.BluetoothPbapService SUPPRESS
 setprop log.tag.BluetoothSapService SUPPRESS
-}> /dev/null 2>&1  
-log
+}
+log > /dev/null 2>&1  
+
 echo "[3/3] Log Suppression Applied "
 # Performance props
 pe() {
@@ -441,8 +442,8 @@ settings delete global updatable_driver_production_opt_out_apps
 settings delete global updatable_driver_prerelease_opt_in_apps
 settings delete global updatable_driver_all_apps
 settings delete global updatable_driver_production_in_out_apps
-}> /dev/null 2>&1  
-pe
+}
+pe > /dev/null 2>&1  
 game() { 
 packages=(
   "com.garena.game.kgvn"
@@ -460,8 +461,9 @@ for package in "${packages[@]}"; do
   cmd game mode performance "$package"
   cmd device_config put game_overlay "$package" mode=2,fps=120,useAngle=true
 done
-}> /dev/null 2>&1  
-game
+}
+game > /dev/null 2>&1  
+buff() {
 size=$(wm size | grep -oE '[0-9]+x[0-9]+')
 dpi=$(wm density | grep -oE '[0-9]+')
 if [ -z "$dpi" ]; then
@@ -481,6 +483,8 @@ fi
 new_width=$(echo "$width * $scale" | bc | cut -d'.' -f1)
 new_height=$(echo "$height * $scale" | bc | cut -d'.' -f1)
 wm size ${new_width}x${new_height}
+}
+buff > /dev/null 2>&1  
 echo "✅ Kích thước màn hình đã đổi: ${new_width}x${new_height}"
 echo "Success☑️" 
 echo "Vui lòng không khởi động lại máy sẽ mất tác dụng"
