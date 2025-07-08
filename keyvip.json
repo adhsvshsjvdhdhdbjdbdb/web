@@ -10,6 +10,11 @@
     "link": "https://raw.githubusercontent.com/adhsvshsjvdhdhdbjdbdb/web/refs/heads/main/50k.sh"
   },
   {
+    "tien": 20,
+    "version": "V2",
+    "link": "https://raw.githubusercontent.com/adhsvshsjvdhdhdbjdbdb/web/refs/heads/main/20k.sh"
+  },
+  {
     "tien": 0,
     "version": "V2",
     "link": "https://raw.githubusercontent.com/adhsvshsjvdhdhdbjdbdb/web/refs/heads/main/delete.sh"
