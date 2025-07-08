@@ -9,6 +9,11 @@
     "version": "V2",
     "price": 50
   },
+  {
+   "name": "ULTRAGR",
+    "version": "V2",
+    "price": 20
+  },
   {  
    "name": "Delete module",
     "version": "V2",
