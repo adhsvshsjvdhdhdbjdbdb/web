@@ -2,7 +2,7 @@
 echo "Module khôi phục"
 sleep 1
 echo "Bắt đầu khôi phục lại trạng thái Bình thường của máy"
-{
+reset() {
 settings delete global activity_manager_constants 
 settings delete system POWER_BALANCED_MODE_OPEN 
 settings delete system POWER_PERFORMANCE_MODE_OPEN 
@@ -44,7 +44,8 @@ settings delete system touch.pressure.calibration
 settings put global window_animation_scale 1
 settings put global transition_animation_scale 1
 settings put global animator_duration_scale 1
-}> /dev/null 2>&1  
+}
+reset > /dev/null 2>&1  
 echo "Khôi phục buff màn hình"
 wm size reset
 wm density reset    
