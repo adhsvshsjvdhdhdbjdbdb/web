@@ -59,14 +59,13 @@ case $refresh_rate in
         exit 1
         ;;
 esac
+
 echo "Tần số quét phát hiện: $refresh_rate Hz"
 
 case "$refresh_rate" in
   60)
     frame_ns=16666667
-    phazev1=995000
     phazev2=1984000
-    phazev3=4012000
     phazev4=4762000
     phazev5=5596000
     phazev6=9200000
@@ -75,9 +74,7 @@ case "$refresh_rate" in
     ;;
   90)
     frame_ns=11111111
-    phazev1=663636
     phazev2=1322798
-    phazev3=2677156
     phazev4=3174603
     phazev5=3728597
     phazev6=6132605
@@ -86,9 +83,7 @@ case "$refresh_rate" in
     ;;
   120)
     frame_ns=8333333
-    phazev1=497015
     phazev2=991101
-    phazev3=2008056
     phazev4=2380952
     phazev5=2800000
     phazev6=4601845
@@ -97,9 +92,7 @@ case "$refresh_rate" in
     ;;
   144)
     frame_ns=6944444
-    phazev1=414903
     phazev2=826718
-    phazev3=1673494
     phazev4=2026984
     phazev5=2373892
     phazev6=3900552
@@ -111,29 +104,23 @@ case "$refresh_rate" in
     exit 1
     ;;
 esac
+
 setprop debug.sf.hwc.min.duration $hwc_duration
-setprop debug.sf.high_fps_early_app_phase_offset_ns $phazev1
-setprop debug.sf.high_fps_early_gl_app_phase_offset_ns $phazev1
 setprop debug.sf.early_app_phase_offset_ns $phazev2
 setprop debug.sf.early_gl_app_phase_offset_ns $phazev2
-setprop debug.sf.high_fps_early_gl_phase_offset_ns $phazev3
-setprop debug.sf.high_fps_early_phase_offset_ns $phazev3
-setprop debug.sf.region_sampling_duration_ns $phazev4
-setprop debug.sf.cached_set_render_duration_ns $phazev4
-setprop debug.sf.early.app.duration $phazev4
-setprop debug.sf.early.sf.duration $phazev4
-setprop debug.sf.earlyGl.app.duration $phazev4
-setprop debug.sf.earlyGl.sf.duration $phazev4
-setprop debug.sf.early_gl_phase_offset_ns $phazev5
 setprop debug.sf.early_phase_offset_ns $phazev5
-setprop debug.sf.region_sampling_period_ns $phazev6
-setprop debug.sf.phase_offset_threshold_for_next_vsync_ns $phazev6
-setprop debug.sf.high_fps_late_app_phase_offset_ns $phazev6
-setprop debug.sf.high_fps_late_sf_phase_offset_ns $phazev6
+setprop debug.sf.early_gl_phase_offset_ns $phazev5
 setprop debug.sf.late.app.duration $phazev6
 setprop debug.sf.late.sf.duration $phazev6
+setprop debug.sf.early.app.duration $phazev4
+setprop debug.sf.early.sf.duration $phazev4
+setprop debug.sf.cached_set_render_duration_ns $phazev4
+setprop debug.sf.region_sampling_duration_ns $phazev4
 setprop debug.sf.region_sampling_timer_timeout_ns $phazev7
-echo "Đã áp dụng tối ưu cho $refresh_rate Hz thành công."
+setprop debug.sf.region_sampling_period_ns $phazev6
+setprop debug.sf.phase_offset_threshold_for_next_vsync_ns $phazev6
+
+echo "✅ Đã áp dụng tối ưu tương thích cho ${refresh_rate}Hz (không gây văng app)."
 
 
 echo "  [1/3] Applied Display Optimization for ${refresh_rate}Hz"
