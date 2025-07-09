@@ -42,7 +42,7 @@ echo "→ [Dọn dẹp bộ nhớ]"
 echo "========================================="
 echo " * Wait For Install * "
 refresh_rate=$(dumpsys SurfaceFlinger | grep refresh-rate | awk -F': ' '{print $2}' | awk '{print int($1+0.5)}')
-echo "$PROGRESS_DIV Display Refresh Rate: ${refresh_rate}Hz"
+echo " Display Refresh Rate: ${refresh_rate}Hz"
 
 case $refresh_rate in
     144|120|90|60)
@@ -55,7 +55,7 @@ case $refresh_rate in
         settings put global touch_sampling_rate $(($refresh_rate * 2))
         ;;
     *)
-        echo "$PROGRESS_DIV ${STICKER_ERROR}Refresh rate $refresh_rate not supported."
+        echo "refresh rate $refresh_rate not supported."
         exit 1
         ;;
 esac
