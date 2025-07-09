@@ -331,12 +331,10 @@ setprop debug.composition.type gpu
 setprop debug.egl.swapinterval 0
 setprop debug.gpu.renderer skiagl
 setprop debug.hwui.renderer skiagl
-setprop debug.hwui.use_threaded_renderer true
 setprop debug.hwc.logvsync 0
 setprop debug.sf.gpuoverlay 0
 setprop debug.sf.sa_enable 1
 setprop debug.qc.hardware 1
-setprop debug.sqlite.journalmode WAL
 setprop debug.sf.sa_log 1
 setprop debug.hwc.asyncdisp 1
 setprop debug.power.loghint 0
@@ -346,9 +344,6 @@ setprop debug.gpuprio 7
 setprop debug.ioprio 7
 setprop debug.hwui.fps_divisor 1
 setprop debugtool.anrhistory 0
-setprop debug.hwc.force_gpu_vsync 1
-setprop debug.sf.gpu_comp_tiling 1
-setprop debug.javafx.animation.fullspeed true
 setprop debug.cpurend.vsync false
 setprop debug.gpurend.vsync false
 setprop debug.performance.tuning 1
@@ -357,16 +352,8 @@ setprop debug.enable-vr-mode 1
 setprop debug.performance.profile 1
 setprop debug.perf.profile 1
 setprop debug.hwui.use_layer_renderer true
-setprop debug.hwui.target_cpu_time_percent 200
-setprop debug.hwui.target_gpu_time_percent 200
-setprop pm.dexopt.bg-dexopt speed-profile
-setprop pm.dexopt.ab-ota speed-profile
-settings delete global updatable_driver_production_opt_in_apps
-settings delete global game_driver_opt_in_apps
-settings delete global updatable_driver_production_opt_out_apps
-settings delete global updatable_driver_prerelease_opt_in_apps
-settings delete global updatable_driver_all_apps
-settings delete global updatable_driver_production_in_out_apps
+setprop debug.hwui.target_cpu_time_percent 100
+setprop debug.hwui.target_gpu_time_percent 100
 }
 pe > /dev/null 2>&1  
 game() { 
