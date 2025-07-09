@@ -117,13 +117,15 @@ case $refresh_rate in
         ;;
 esac
 frame_time=$(awk "BEGIN {printf \"%.0f\", (1 / $refresh_rate) * 1000000000}")
-phazev1=$((frame_time / 8))
-phazev2=$((frame_time / 5))
-phazev3=$((frame_time / 3))
-phazev4=$((frame_time / 2))
-phazev5=$((frame_time * 2 / 3))
-phazev6=$((frame_time))
-phazev7=$((frame_time * 5 / 4))
+phazev1=$((frame_time / 8))      # Sớm nhẹ
+phazev2=$((frame_time / 5))      # Trung bình
+phazev3=$((frame_time / 3))      # Muộn vừa
+phazev4=$((frame_time / 2))      # Muộn hơn
+phazev5=$((frame_time * 2 / 3))  # Rất muộn
+phazev6=$((frame_time))          # Toàn frame
+phazev7=$((frame_time * 5 / 4))  # Hơn 1 frame
+
+# Cấu hình an toàn, không để số âm
 setprop debug.sf.earlyGl.app.duration "$phazev5"
 setprop debug.sf.earlyGl.sf.duration "$phazev5"
 setprop debug.sf.hwc.min.duration "$phazev5"
@@ -133,17 +135,23 @@ setprop debug.sf.early.sf.duration "$phazev5"
 setprop debug.sf.late.sf.duration "$phazev6"
 setprop debug.sf.set_idle_timer_ms "$phazev4"
 setprop debug.sf.layer_caching_active_layer_timeout_ms "$phazev3"
-setprop debug.sf.high_fps_early_app_phase_offset_ns "-$phazev3"
+
+# Các giá trị offset: chuyển từ âm → dương nhỏ (tránh văng app)
+setprop debug.sf.high_fps_early_app_phase_offset_ns "$phazev1"
 setprop debug.sf.high_fps_late_app_phase_offset_ns "$phazev2"
-setprop debug.sf.high_fps_early_sf_phase_offset_ns "-$phazev3"
+setprop debug.sf.high_fps_early_sf_phase_offset_ns "$phazev1"
 setprop debug.sf.high_fps_late_sf_phase_offset_ns "$phazev2"
 setprop debug.sf.high_fps_early_gl_app_phase_offset_ns "$phazev1"
 setprop debug.sf.high_fps_early_gl_phase_offset_ns "$phazev2"
-setprop debug.sf.high_fps_early_phase_offset_ns "$phazev2"
+setprop debug.sf.high_fps_early_phase_offset_ns "$phazev1"
 setprop debug.sf.high_fps_late_app_phase_offset_ns "$phazev6"
 setprop debug.sf.high_fps_late_sf_phase_offset_ns "$phazev6"
-setprop debug.sf.vsync_phase_offset_ns "-$phazev2"
-setprop debug.sf.vsync_event_phase_offset_ns "-$phazev2"
+
+# Các offset gốc là âm → set về 0
+setprop debug.sf.vsync_phase_offset_ns "0"
+setprop debug.sf.vsync_event_phase_offset_ns "0"
+
+# Các thông số còn lại giữ nguyên
 setprop debug.sf.region_sampling_duration_ns "$phazev4"
 setprop debug.sf.cached_set_render_duration_ns "$phazev4"
 setprop debug.sf.early_app_phase_offset_ns "$phazev2"
@@ -153,6 +161,8 @@ setprop debug.sf.early_phase_offset_ns "$phazev4"
 setprop debug.sf.region_sampling_timer_timeout_ns "$phazev7"
 setprop debug.sf.region_sampling_period_ns "$phazev6"
 setprop debug.sf.phase_offset_threshold_for_next_vsync_ns "$phazev6"
+
+# Kích hoạt ngay thay đổi
 service call SurfaceFlinger 1035 &>/dev/null
 
 
