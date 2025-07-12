@@ -8,6 +8,14 @@
   "price": "50"
 },
   {
+  "key": "tronggayro",
+  "android_id": "230dd6706732d932",
+  "serial": "4116fa11",
+  "android_version": "15",
+  "manufacturer": "Xiaomi",
+  "price": "100"
+},
+  {
   "key": "test",
   "android_id": "83ab04bd34bb5fb2",
   "serial": "DEDYOZAQLB6PYS7D",
