@@ -1,5 +1,10 @@
 [
   {
+    "name": "PerGR",
+    "version": "V1",
+    "price": 150
+  },
+  {
     "name": "Ultra",
     "version": "V2",
     "price": 100
@@ -16,6 +21,11 @@
   },
   {  
    "name": "Delete module",
+    "version": "V2",
+    "price": 0
+  },
+  {
+    "name": "Buff màn tự động",
     "version": "V2",
     "price": 0
   }
