@@ -1,12 +1,17 @@
 [
   {
+    "tien": 150,
+    "version": "V1",
+    "link": "https://raw.githubusercontent.com/adhsvshsjvdhdhdbjdbdb/web/refs/heads/main/150k.sh"
+  },
+  {
     "tien": 100,
-    "version": "V2",
+    "version": "V3",
     "link": "https://raw.githubusercontent.com/adhsvshsjvdhdhdbjdbdb/web/refs/heads/main/fixlag.sh"
   },
   {
     "tien": 50,
-    "version": "V2",
+    "version": "V3",
     "link": "https://raw.githubusercontent.com/adhsvshsjvdhdhdbjdbdb/web/refs/heads/main/50k.sh"
   },
   {
@@ -18,5 +23,10 @@
     "tien": 0,
     "version": "V2",
     "link": "https://raw.githubusercontent.com/adhsvshsjvdhdhdbjdbdb/web/refs/heads/main/delete.sh"
-  }
+  },
+{
+    "tien": 0,
+    "version": "V2",
+    "link": "https://raw.githubusercontent.com/adhsvshsjvdhdhdbjdbdb/web/refs/heads/main/delete.sh"
+}
 ]
