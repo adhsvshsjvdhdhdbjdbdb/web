@@ -44,6 +44,10 @@ settings delete system touch.pressure.calibration
 settings put global window_animation_scale 1
 settings put global transition_animation_scale 1
 settings put global animator_duration_scale 1
+cmd power set-adaptive-power-saver-enabled true
+cmd power set-fixed-performance-mode-enabled false
+cmd power set-mode 1
+dumpsys battery reset
 }
 reset > /dev/null 2>&1  
 echo "Khôi phục buff màn hình"
