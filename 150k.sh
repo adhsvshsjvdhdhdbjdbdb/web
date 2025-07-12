@@ -735,6 +735,21 @@ pm disable-user --user 0 com.samsung.android.game.gamehome
 }
 app > /dev/null 2>&1  
 pe() {
+setprop debug.sf.enable_adpf_cpu_hint true
+setprop debug.rs.precision rs_fp_full
+setprop debug.perf_event_max_sample_rate 1
+setprop debug.perf_event_mlock_kb 2
+setprop debug.perf_cpu_time_max_percent 1
+setprop security.perf_harden 1
+setprop security.perf_harden 0
+setprop debug.lldb-rpc-server 0
+setprop debug.MB.running 0
+setprop debug.hwc.otf 0
+setprop debug.art.monitor.app false
+setprop debug.hwui.fps_divisor 1
+setprop debug.sf.no_vsync 1 
+setprop debug.sf.vsync 1
+setprop debug.sf.hw 1
 setprop debug.hwui.renderer skiagl
 setprop debug.gpu.renderer skiagl
 setprop debug.renderengine.backend skiaglthreaded
