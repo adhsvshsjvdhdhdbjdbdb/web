@@ -120,63 +120,44 @@ esac
 
 echo "Tần số quét phát hiện: $refresh_rate Hz"
 
-case "$refresh_rate" in
-  60)
-    frame_ns=16666667
-    phazev2=1984000
-    phazev4=4762000
-    phazev5=5596000
-    phazev6=9200000
-    phazev7=17540000
-    hwc_duration=21666667
-    ;;
-  90)
-    frame_ns=11111111
-    phazev2=1322798
-    phazev4=3174603
-    phazev5=3728597
-    phazev6=6132605
-    phazev7=11701064
-    hwc_duration=14444444
-    ;;
-  120)
-    frame_ns=8333333
-    phazev2=991101
-    phazev4=2380952
-    phazev5=2800000
-    phazev6=4601845
-    phazev7=8771930
-    hwc_duration=10833333
-    ;;
-  144)
-    frame_ns=6944444
-    phazev2=826718
-    phazev4=2026984
-    phazev5=2373892
-    phazev6=3900552
-    phazev7=7425736
-    hwc_duration=9027777
-    ;;
-  *)
-    echo "Không hỗ trợ tần số quét này ($refresh_rate Hz). Thoát."
-    exit 1
-    ;;
-esac
-
-setprop debug.sf.hwc.min.duration $hwc_duration
-setprop debug.sf.early_app_phase_offset_ns $phazev2
-setprop debug.sf.early_gl_app_phase_offset_ns $phazev2
-setprop debug.sf.early_phase_offset_ns $phazev5
-setprop debug.sf.early_gl_phase_offset_ns $phazev5
-setprop debug.sf.late.app.duration $phazev6
-setprop debug.sf.late.sf.duration $phazev6
-setprop debug.sf.early.app.duration $phazev4
-setprop debug.sf.early.sf.duration $phazev4
-setprop debug.sf.cached_set_render_duration_ns $phazev4
-setprop debug.sf.region_sampling_duration_ns $phazev4
-setprop debug.sf.region_sampling_timer_timeout_ns $phazev7
-setprop debug.sf.region_sampling_period_ns $phazev6
-setprop debug.sf.phase_offset_threshold_for_next_vsync_ns $phazev6
+frame_time=$(awk "BEGIN {printf \"%.0f\", (1 / $refresh_rate) * 1000000000}")
+phazev1=$((frame_time / 8))
+phazev2=$((frame_time / 5))
+phazev3=$((frame_time / 3))
+phazev4=$((frame_time / 2))
+phazev5=$((frame_time * 2 / 3))
+phazev6=$((frame_time))
+phazev7=$((frame_time * 5 / 4))
+setprop debug.sf.earlyGl.app.duration "$phazev5"
+setprop debug.sf.earlyGl.sf.duration "$phazev5"
+setprop debug.sf.hwc.min.duration "$phazev5"
+setprop debug.sf.early.app.duration "$phazev5"
+setprop debug.sf.late.app.duration "$phazev6"
+setprop debug.sf.early.sf.duration "$phazev5"
+setprop debug.sf.late.sf.duration "$phazev6"
+setprop debug.sf.set_idle_timer_ms "$phazev4"
+setprop debug.sf.layer_caching_active_layer_timeout_ms "$phazev3"
+setprop debug.sf.high_fps_early_app_phase_offset_ns "-$phazev3"
+setprop debug.sf.high_fps_late_app_phase_offset_ns "$phazev2"
+setprop debug.sf.high_fps_early_sf_phase_offset_ns "-$phazev3"
+setprop debug.sf.high_fps_late_sf_phase_offset_ns "$phazev2"
+setprop debug.sf.high_fps_early_gl_app_phase_offset_ns "$phazev1"
+setprop debug.sf.high_fps_early_gl_phase_offset_ns "$phazev2"
+setprop debug.sf.high_fps_early_phase_offset_ns "$phazev2"
+setprop debug.sf.high_fps_late_app_phase_offset_ns "$phazev6"
+setprop debug.sf.high_fps_late_sf_phase_offset_ns "$phazev6"
+setprop debug.sf.vsync_phase_offset_ns "-$phazev2"
+setprop debug.sf.vsync_event_phase_offset_ns "-$phazev2"
+setprop debug.sf.region_sampling_duration_ns "$phazev4"
+setprop debug.sf.cached_set_render_duration_ns "$phazev4"
+setprop debug.sf.early_app_phase_offset_ns "$phazev2"
+setprop debug.sf.early_gl_app_phase_offset_ns "$phazev2"
+setprop debug.sf.early_gl_phase_offset_ns "$phazev4"
+setprop debug.sf.early_phase_offset_ns "$phazev4"
+setprop debug.sf.region_sampling_timer_timeout_ns "$phazev7"
+setprop debug.sf.region_sampling_period_ns "$phazev6"
+setprop debug.sf.phase_offset_threshold_for_next_vsync_ns "$phazev6"
+service call SurfaceFlinger 1035 &>/dev/null
 echo "$PROGRESS_DIV [4/5] Applied Display Optimization for ${refresh_rate}Hz ${STICKER_PROGRESS}"
 #Tối ưu ram
 get_ram_gb() {
@@ -927,6 +908,22 @@ setprop debug.hwui.dynamic_resource_cache 1
 setprop debug.frame_rate_cap 1
 setprop debug.hwui.target_cpu_time_percent 200  
 setprop debug.hwui.target_gpu_time_percent 200  
+settings put global kernel_cpu_thread_reader num_buckets=0,collected_uids=,minimum_total_cpu_usage_millis=999999999
+    if [ -f /sys/devices/system/cpu/cpu7/cpufreq/cpuinfo_max_freq ] && [ -f /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_max_freq ]; then
+        settings put global cpu_max_freq_big $(cat /sys/devices/system/cpu/cpu7/cpufreq/cpuinfo_max_freq)
+        settings put global cpu_max_freq_little $(cat /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_max_freq)
+        settings put global cpu_boost_freq_big $(cat /sys/devices/system/cpu/cpu7/cpufreq/cpuinfo_max_freq)
+        settings put global cpu_boost_freq_little $(cat /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_max_freq)
+        settings put global cpu_freq_min_sampling $(($(cat /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_max_freq) - 200000))
+        settings put global cpu_frequency_limit_max $(cat /sys/devices/system/cpu/cpu7/cpufreq/cpuinfo_max_freq)
+        settings put global cpu_frequency_limit_min $(cat /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_max_freq)
+        settings put global cpu_max_freq_ovrrd 0
+        settings put global cpu_boost_freq_ovrrd 0
+        settings put global gpu_max_freq_ovrrd 0
+        echo "Successful"
+    else
+        echo "Failed, maybe ur phone doesn't support"
+    fi
 }
 gpu > /dev/null 2>&1  
 
@@ -982,7 +979,6 @@ settings put global touch_drag_and_drop_optimization 1
 settings put global touch_sensitivity_boost 1
 settings put global touch_tap_responsiveness 1
 settings put system touch_latency 0    
-settings put secure touch_resampling_rate 720
 settings put system min_touch_target 48
 settings put global touch_response_time 3
 settings put global touch_fling_velocity 25000
