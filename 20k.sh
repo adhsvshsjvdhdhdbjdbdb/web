@@ -459,6 +459,23 @@ settings put system view.scroll_friction 10
  settings put system touch_gestureMode spots
  settings put system multitouch_min_distance 1
  settings put system multitouch_settle_interval 1
+ settings put system multitouch_min_distance 1
+ settings put system multitouch_settle_interval 1
+ settings put system vibrate_on_touch 0
+ settings put system haptic_feedback_enabled 0
+ settings put system MultitouchSettleInterval 0
+ settings put system MultitouchMinDistance 0
+ settings put system TapInterval 0
+ settings put system TapDragInterval 0
+ settings put system TapSlop 2527200
+ settings put system touch_size.scale 1
+ settings put system touch_size.bias 0
+ settings put system DragMinSwitchSpeed 2527200
+ settings put system SwipeMaxWidthRatio 1
+ settings put system MovementSpeedRatio 1
+ settings put system ZoomSpeedRatio 1
+ settings put system SwipeTransitionAngleCosine 3.6
+ settings put system mot_proximity.distance 1
  settings put system tap_interval 1
  settings put system tap_slop 1
 dumpsys binder_calls_stats --disable
@@ -466,6 +483,33 @@ dumpsys binder_calls_stats --disable-detailed-tracking
 settings put global binder_calls_stats sampling_interval=600000000,detailed_tracking=disable,enabled=false,upload_data=false
 settings put secure game_auto_temperature 0
 settings put secure game_dashboard_always_on 1
+settings put global PERF_RES_FPS_FPSGO_LLF_TH 100
+ settings put global PERF_RES_FPS_FPSGO_LLF_POLICY 1
+ settings put global PERF_RES_FPS_FPSGO_LLF_LIGHT_LOADING_POLICY 20
+ settings put global PERF_RES_FPS_FBT_RESCUE_F 90
+ settings put global PERF_RES_FPS_FBT_QR_T2WNT_Y_P 10
+ settings put global PERF_RES_FPS_FBT_QR_T2WNT_Y_N 10
+ settings put global PERF_RES_FPS_FBT_GCC_ENQ_BOUND_THRS 20
+ settings put global PERF_RES_FPS_FBT_GCC_DEQ_BOUND_THRS 20
+ settings put global PERF_RES_FPS_FBT_GCC_DEQ_BOUND_QUOTA 6
+ settings put global PERF_RES_FPS_FBT_GCC_DOWN_QUOTA_PCT 50
+ settings put global PERF_RES_FPS_FPSGO_IDLEPREFER 0
+ settings put global PERF_RES_FPS_FPSGO_SPID 1
+ settings put global PERF_RES_FPS_GBE1_ENABLE 1
+ settings put global PERF_RES_FPS_GBE2_ENABLE 1
+ settings put global PERF_RES_FPS_GBE2_TIMER2_MS1 1000
+ settings put global PERF_RES_FPS_GBE2_MAX_BOOST_CNT 10
+ settings put global PERF_RES_FPS_GBE2_TIMER1_MS 150
+ settings put global PERF_RES_FPS_GBE_POLICY_MASK 87
+ settings put global PERF_RES_FPS_FBT_CEILING_ENABLE 1
+ settings put global PERF_RES_GPU_GED_MARGIN_MODE 110
+ settings put global PERF_RES_GPU_FREQ_MAX 100
+ settings put global PERF_RES_FPS_FPSGO_BOOST_LR 1
+ settings put global PERF_RES_FPS_FBT_ULTRA_RESCUE 1
+ settings put global PERF_RES_FPS_FBT_RESCUE_SECOND_GROUP 1
+ settings put global PERF_RES_FPS_FBT_RESCUE_SECOND_TIME 1
+ settings put global PERF_RES_FPS_FBT_RESCUE_SECOND_ENABLE 1
+ settings put global PERF_RES_FPS_FBT_GCC_FPS_MARGIN 120
 }
 game > /dev/null 2>&1  
 echo "└───────────────────────┘"
