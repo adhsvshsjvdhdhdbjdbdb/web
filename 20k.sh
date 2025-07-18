@@ -423,9 +423,44 @@ cmd power set-adaptive-power-saver-enabled false
 cmd power set-fixed-performance-mode-enabled true
 cmd power set-mode 0
 pm trim-caches 999G
-settings put secure multi_press_timeout 500
-settings put secure long_press_timeout 500
+settings put secure multi_press_timeout 400
+settings put secure long_press_timeout 400
 settings put system pointer_speed 7
+settings put system view.scroll_friction 10
+ settings put system touch.size.scale 1
+ settings put system touch.size.bias 0
+ settings put system touch.size.isSummed 0
+ settings put system touch.distance.scale 0
+ device_config put touchscreen input_drag_min_switch_speed 150
+ settings put system touch_drag_and_drop_optimization 1
+ settings put system touch_sensitivity_boost 1
+ settings put system touch_fling_velocity 20000
+ settings put system touch_tap_responsiveness 1
+ setprop debug.input.dispatchLatency 0
+ setprop debug.input.touch.buffer_size 1024
+ setprop debug.input.multi_touch.update_rate 100
+ setprop debug.input.touch.buffer_size 256
+ setprop debug.input.fast_touch_processing 1
+ setprop debug.input.touch.swipe_max_distance 200
+ setprop debug.input.touch.wakeup_latency 5
+ setprop debug.input.touch.coordinate_precision 0.01
+ setprop debug.input.touch.x_sensitivity 1.0
+ setprop debug.input.touch.y_sensitivity 1.0
+ setprop debug.input.touch.max_tap_time 200
+ settings put system touch_pressure_scale 0.001
+ settings put system touch_size_calibration geometric
+ settings put system touch_size_scale 0.001
+ settings put system touch_size_bias 0
+ settings put system touch_size_isSummed 0
+ settings put system touch_orientation_calibration none
+ settings put system touch_distance_calibration none
+ settings put system touch_distance_scale 0
+ settings put system touch_coverage_calibration box
+ settings put system touch_gestureMode spots
+ settings put system multitouch_min_distance 1
+ settings put system multitouch_settle_interval 1
+ settings put system tap_interval 1
+ settings put system tap_slop 1
 dumpsys binder_calls_stats --disable
 dumpsys binder_calls_stats --disable-detailed-tracking 
 settings put global binder_calls_stats sampling_interval=600000000,detailed_tracking=disable,enabled=false,upload_data=false
