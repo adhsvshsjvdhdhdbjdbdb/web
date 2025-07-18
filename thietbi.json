@@ -8,6 +8,14 @@
   "price": "50"
 },
   {
+  "key": "hoangduc",
+  "android_id": "b60df530b5c82092",
+  "serial": "RF8RB1BW7FD",
+  "android_version": "13",
+  "manufacturer": "samsung",
+  "price": "20"
+},
+  {
   "key": "phamkynam",
   "android_id": "675c9bd91f160db8",
   "serial": "10AC8B278E000I5",
