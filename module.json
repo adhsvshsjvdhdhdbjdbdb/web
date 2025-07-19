@@ -1,5 +1,10 @@
 [
   {
+    "name": "King",
+    "version": "V1",
+    "price": 200
+  },
+  {
     "name": "PerGR",
     "version": "V1",
     "price": 150
