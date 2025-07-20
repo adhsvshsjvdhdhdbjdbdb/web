@@ -8,6 +8,14 @@
   "price": "100"
 },
   {
+  "key": "tuankhang",
+  "android_id": "21fbcc6856d88b6c",
+  "serial": "459356d17d75",
+  "android_version": "15",
+  "manufacturer": "Xiaomi",
+  "price": "20"
+},
+  {
   "key": "leduc",
   "android_id": "7cb996a6c16d043e",
   "serial": "10AE5Q2RBL0015D",
