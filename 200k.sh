@@ -1052,8 +1052,8 @@ done
 }
 dong > /dev/null 2>&1  
 ff() {
-cmd game set --fps $refresh_rate --mode 2 --downscale 0.7 com.dts.freefiremax
-cmd game set --fps $refresh_rate --mode 2 --downscale 0.7 com.dts.freefireth
+cmd game set --fps $refresh_rate --mode 2 --downscale 0.5 com.dts.freefiremax
+cmd game set --fps $refresh_rate --mode 2 --downscale 0.5 com.dts.freefireth
 }
 ff > /dev/null 2>&1  
 echo "$SPACER"
