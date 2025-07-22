@@ -1,5 +1,7 @@
 #!/system/bin/sh
 # Định nghĩa các biến giao diện
+wm size reset
+wm density reset
 DIVIDER="=========================================="
 SECTION_DIV="=========================================="
 PROGRESS_DIV="--> "
@@ -112,6 +114,10 @@ echo "$PROGRESS_DIV[3/4] Boosting CPU/GPU...    $PROGRESS_MARK"
 sleep 0.5
 echo "$PROGRESS_DIV[4/4] Finalizing...         $PROGRESS_MARK"
 echo ""
+sleep 1
+cmd power set-mode 0
+dumpsys battery set level 100
+cmd power set-adaptive-power-saver-enabled false
 sleep 1
 refresh_rate=$(dumpsys SurfaceFlinger | grep refresh-rate | awk -F': ' '{print $2}' | awk '{print int($1+0.5)}')
 echo "$PROGRESS_DIV Display Refresh Rate: ${refresh_rate}Hz"
@@ -326,6 +332,8 @@ main() {
     apply_config "$ram"
 }
 main
+sleep 1
+dumpsys battery reset
 log() {
 setprop log.tag.AF::MmapTrack SUPPRESS
 setprop log.tag.AF::OutputTrack SUPPRESS
@@ -856,7 +864,6 @@ am clear-watch-heap all
 am set-deterministic-uid-idle all false
 sm idle-maint abort
 am kill-all
-dumpsys battery set level 100
 }
 pe > /dev/null 2>&1  
 game() {
@@ -947,6 +954,11 @@ for package in "${packages[@]}"; do
 done
 }
 tro > /dev/null 2>&1  
+ff() {
+cmd game set --fps $refresh_rate --mode 2 --downscale 0.7 com.dts.freefiremax
+cmd game set --fps $refresh_rate --mode 2 --downscale 0.7 com.dts.freefireth
+}
+ff > /dev/null 2>&1  
 # Kết quả
 echo "$DIVIDER"
 echo "✔$(pad_text "OPTIMIZATION DONE")✔"
