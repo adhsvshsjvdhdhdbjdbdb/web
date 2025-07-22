@@ -1,5 +1,6 @@
 #!/system/bin/sh
-
+wm size reset
+wm density reset
 # Định nghĩa các biến giao diện
 WIDTH=60
 BOX_TOP="+----------------------------------------------------------+"
@@ -126,6 +127,10 @@ sleep 0.5
 echo "$PROGRESS[3/4] Optimizing CPU/GPU performance...$(printf "%-16s" "[OK]")"
 sleep 0.5
 echo "$PROGRESS[4/4] Applying system tweaks...$(printf "%-22s" "[OK]")"
+cmd power set-mode 0
+dumpsys battery set level 100
+cmd power set-adaptive-power-saver-enabled false
+sleep 1
 refresh_rate=$(dumpsys SurfaceFlinger | grep refresh-rate | awk -F': ' '{print $2}' | awk '{print int($1+0.5)}')
 echo "$PROGRESS_DIV Display Refresh Rate: ${refresh_rate}Hz"
 
@@ -321,6 +326,8 @@ main() {
 }
 
 main
+sleep 1
+dumpsys battery reset
 log() { 
 disable_log=(
     "log.tag.FA SUPPRESS"
@@ -1030,11 +1037,25 @@ packages=(
 )
 for package in "${packages[@]}"; do
   cmd game mode performance "$package"
-  cmd device_config put game_overlay "$package" mode=2,fps=120,useAngle=true
+  cmd device_config put game_overlay "$package" mode=2,fps=$refresh_rate,useAngle=true
   cmd package compile -m speed-profile -f "$package"
 done
 }
 tro > /dev/null 2>&1  
+dong() {
+for app in $(cmd package list packages -3 | cut -f 2 -d ":"); do
+if [[ ! "$app" == "ggproultra.gr.vn" ]]; then
+cmd activity force-stop "$app"
+cmd activity kill "$app"
+fi
+done
+}
+dong > /dev/null 2>&1  
+ff() {
+cmd game set --fps $refresh_rate --mode 2 --downscale 0.7 com.dts.freefiremax
+cmd game set --fps $refresh_rate --mode 2 --downscale 0.7 com.dts.freefireth
+}
+ff > /dev/null 2>&1  
 echo "$SPACER"
 echo "$(pad_text "Optimization Complete!")"
 echo "$BOX_BTM"
