@@ -1,4 +1,6 @@
 #!/system/bin/sh
+wm size reset
+wm density reset
 dev=grapfifa
 refresh_rate=$(dumpsys SurfaceFlinger | grep "refresh-rate" | awk '{printf("%d ", $3)}')
 brand=$(getprop ro.product.brand)
@@ -41,6 +43,10 @@ echo "→ [Tối ưu trò chơi]"
 echo "→ [Dọn dẹp bộ nhớ]"
 echo "========================================="
 echo " * Bắt đầu chạy code * "
+cmd power set-mode 0
+dumpsys battery set level 100
+cmd power set-adaptive-power-saver-enabled false
+sleep 1
 refresh_rate=$(dumpsys SurfaceFlinger | grep refresh-rate | awk -F': ' '{print $2}' | awk '{print int($1+0.5)}')
 echo "$PROGRESS_DIV Display Refresh Rate: ${refresh_rate}Hz"
 
@@ -255,6 +261,8 @@ main() {
 }
 
 main
+sleep 1
+dumpsys battery reset
 log() {
 setprop log.tag.FA WARN
 setprop log.tag.AF::MmapTrack WARN
@@ -669,9 +677,7 @@ settings put system POWER_SAVE_PRE_SYNCHRONIZE_ENABLE 0
 settings put global GPUTUNER_SWITCH true
 settings put global CPUTUNER_SWITCH true
 settings put global performance_profile high_performance
-cmd power set-adaptive-power-saver-enabled false
 cmd power set-fixed-performance-mode-enabled true
-cmd power set-mode 0
 setprop debug.javafx.animation.fullspeed true
 setprop debug.javafx.animation.framerate 165
 setprop debug.javafx.animation.fullframe 1
@@ -752,7 +758,6 @@ setprop debug.performance.profile 1
 setprop debug.perf.profile 1
 setprop debug.hwui.use_layer_renderer true
 setprop debug.hwui.target_cpu_time_percent 100
-dumpsys battery set level 100
 setprop debug.hwui.target_gpu_time_percent 100
 }
 pe > /dev/null 2>&1  
@@ -771,10 +776,24 @@ packages=(
 )
 for package in "${packages[@]}"; do
   cmd game mode performance "$package"
-  cmd device_config put game_overlay "$package" mode=2,fps=120,useAngle=true
+  cmd device_config put game_overlay "$package" mode=2,fps=$refresh_rate,useAngle=true
 done
 }
 game > /dev/null 2>&1  
+dong() {
+for app in $(cmd package list packages -3 | cut -f 2 -d ":"); do
+if [[ ! "$app" == "ggproultra.gr.vn" ]]; then
+cmd activity force-stop "$app"
+cmd activity kill "$app"
+fi
+done
+}
+dong > /dev/null 2>&1  
+ff() {
+cmd game set --fps $refresh_rate --mode 2 --downscale 0.7 com.dts.freefiremax
+cmd game set --fps $refresh_rate --mode 2 --downscale 0.7 com.dts.freefireth
+}
+ff > /dev/null 2>&1  
 echo "Success☑️" 
 echo "Vui lòng không khởi động lại máy sẽ mất tác dụng"
 echo "Vào game test thôi🎮"
