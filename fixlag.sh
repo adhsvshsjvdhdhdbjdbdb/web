@@ -1,4 +1,6 @@
 #!/system/bin/sh
+wm size reset
+wm density reset
 DIVIDER="─────────────◇─────────────────────◇─────────────"
 SECTION_DIV="────────────────────────★────────────────────────"
 PROGRESS_DIV="──────➤ "
@@ -99,6 +101,10 @@ echo "$PROGRESS_DIV[3/5] Activating Turbo Mode...        ${STICKER_PROGRESS}"
 echo ""
 echo ""
 sleep 0.5
+cmd power set-mode 0
+dumpsys battery set level 100
+cmd power set-adaptive-power-saver-enabled false
+sleep 1
 refresh_rate=$(dumpsys SurfaceFlinger | grep refresh-rate | awk -F': ' '{print $2}' | awk '{print int($1+0.5)}')
 echo "$PROGRESS_DIV Display Refresh Rate: ${refresh_rate}Hz"
 
@@ -294,6 +300,8 @@ main() {
 }
 
 main
+sleep 1
+dumpsys battery reset
 # Suppress log tags
 log() {
 setprop log.tag.FA WARN
@@ -995,7 +1003,6 @@ nhay > /dev/null 2>&1
 echo "$PROGRESS_DIV Touch Input Optimization Completed ${STICKER_PROGRESS}"
 # Tối ưu hóa chế độ chơi game   
 game() {
-dumpsys battery set level 100
 settings put global game_driver_optimize_fps 1
 settings put global game_driver true
 cmd device_config put gpufreq boost 1
@@ -1063,11 +1070,25 @@ packages=(
 )
 for package in "${packages[@]}"; do
   cmd game mode performance "$package"
-  cmd device_config put game_overlay "$package" mode=2,fps=120,useAngle=true
+  cmd device_config put game_overlay "$package" mode=2,fps=$refresh_rate,useAngle=true
   cmd package compile -m speed-profile -f "$package"
 done
 }
 tro > /dev/null 2>&1  
+dong() {
+for app in $(cmd package list packages -3 | cut -f 2 -d ":"); do
+if [[ ! "$app" == "ggproultra.gr.vn" ]]; then
+cmd activity force-stop "$app"
+cmd activity kill "$app"
+fi
+done
+}
+dong > /dev/null 2>&1  
+ff() {
+cmd game set --fps $refresh_rate --mode 2 --downscale 0.7 com.dts.freefiremax
+cmd game set --fps $refresh_rate --mode 2 --downscale 0.7 com.dts.freefireth
+}
+ff > /dev/null 2>&1  
 echo "$DIVIDER"
 echo "$STICKER_COMPLETION$(pad_text "OPTIMIZATION COMPLETED")"
 echo "$SECTION_DIV"
