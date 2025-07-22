@@ -67,64 +67,37 @@ case $refresh_rate in
 esac
 
 echo "Tần số quét phát hiện: $refresh_rate Hz"
-
-case "$refresh_rate" in
-  60)
-    frame_ns=16666667
-    phazev2=1984000
-    phazev4=4762000
-    phazev5=5596000
-    phazev6=9200000
-    phazev7=17540000
-    hwc_duration=21666667
-    ;;
-  90)
-    frame_ns=11111111
-    phazev2=1322798
-    phazev4=3174603
-    phazev5=3728597
-    phazev6=6132605
-    phazev7=11701064
-    hwc_duration=14444444
-    ;;
-  120)
-    frame_ns=8333333
-    phazev2=991101
-    phazev4=2380952
-    phazev5=2800000
-    phazev6=4601845
-    phazev7=8771930
-    hwc_duration=10833333
-    ;;
-  144)
-    frame_ns=6944444
-    phazev2=826718
-    phazev4=2026984
-    phazev5=2373892
-    phazev6=3900552
-    phazev7=7425736
-    hwc_duration=9027777
-    ;;
-  *)
-    echo "Không hỗ trợ tần số quét này ($refresh_rate Hz). Thoát."
-    exit 1
-    ;;
-esac
-
-setprop debug.sf.hwc.min.duration $hwc_duration
-setprop debug.sf.early_app_phase_offset_ns $phazev2
-setprop debug.sf.early_gl_app_phase_offset_ns $phazev2
-setprop debug.sf.early_phase_offset_ns $phazev5
-setprop debug.sf.early_gl_phase_offset_ns $phazev5
-setprop debug.sf.late.app.duration $phazev6
-setprop debug.sf.late.sf.duration $phazev6
-setprop debug.sf.early.app.duration $phazev4
-setprop debug.sf.early.sf.duration $phazev4
-setprop debug.sf.cached_set_render_duration_ns $phazev4
-setprop debug.sf.region_sampling_duration_ns $phazev4
-setprop debug.sf.region_sampling_timer_timeout_ns $phazev7
-setprop debug.sf.region_sampling_period_ns $phazev6
-setprop debug.sf.phase_offset_threshold_for_next_vsync_ns $phazev6
+if [ "$refresh_rate" -eq 60 ]; then
+    setprop debug.sf.early.app.duration 20000000
+    setprop debug.sf.early.sf.duration 16666666
+    setprop debug.sf.earlyGl.app.duration 20000000
+    setprop debug.sf.earlyGl.sf.duration 16666666
+    setprop debug.sf.late.app.duration 16666666
+    setprop debug.sf.late.sf.duration 20000000
+elif [ "$refresh_rate" -eq 90 ]; then
+    setprop debug.sf.early.app.duration 12500000
+    setprop debug.sf.early.sf.duration 11111111
+    setprop debug.sf.earlyGl.app.duration 12500000
+    setprop debug.sf.earlyGl.sf.duration 11111111 
+    setprop debug.sf.late.app.duration 11111111
+    setprop debug.sf.late.sf.duration 12500000
+elif [ "$refresh_rate" -eq 120 ]; then
+    setprop debug.sf.early.app.duration 10500000
+    setprop debug.sf.early.sf.duration 8333333
+    setprop debug.sf.earlyGl.app.duration 10500000
+    setprop debug.sf.earlyGl.sf.duration 8333333
+    setprop debug.sf.late.app.duration 8333333
+    setprop debug.sf.late.sf.duration 10500000
+elif [ "$refresh_rate" -eq 144 ]; then
+    setprop debug.sf.early.app.duration 8500000
+    setprop debug.sf.early.sf.duration 6944444
+    setprop debug.sf.earlyGl.app.duration 8500000
+    setprop debug.sf.earlyGl.sf.duration 6944444
+    setprop debug.sf.late.app.duration 6944444
+    setprop debug.sf.late.sf.duration 8500000
+else
+    echo "Tần số quét không xác định được ⚠"
+fi
 echo "  [1/3] Applied Display Optimization for ${refresh_rate}Hz"
 #Tối ưu ram
 get_ram_gb() {
