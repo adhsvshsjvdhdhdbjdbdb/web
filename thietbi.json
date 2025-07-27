@@ -8,6 +8,14 @@
   "price": "100"
 },
   {
+  "key": "ngminhkhang",
+  "android_id": "e04553fefc249901",
+  "serial": "JZS849HIZ9TS4HRC",
+  "android_version": "12",
+  "manufacturer": "OPPO",
+  "price": "50"
+},
+  {
   "key": "test",
   "android_id": "83ab04bd34bb5fb2",
   "serial": "DEDYOZAQLB6PYS7D",
