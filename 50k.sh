@@ -669,8 +669,8 @@ settings put system game-touchscreen-boost 1
 settings put system touch.pressure.scale 0.001
 settings put system touch_boost 1
 settings put system ram_boost 1
-settings put secure long_press_timeout 500
-settings put secure multi_press_timeout 500
+settings put secure long_press_timeout 350
+settings put secure multi_press_timeout 250
 settings put secure speed_mode 1
 settings put secure speed_mode_enable 1
 setprop hwui.render_dirty_regions 0
@@ -761,8 +761,8 @@ done
 }
 dong > /dev/null 2>&1  
 ff() {
-cmd game set --fps $refresh_rate --mode 2 --downscale 0.6 com.dts.freefiremax
-cmd game set --fps $refresh_rate --mode 2 --downscale 0.6 com.dts.freefireth
+cmd game set --fps $refresh_rate --mode 2 --downscale 0.7 com.dts.freefiremax
+cmd game set --fps $refresh_rate --mode 2 --downscale 0.7 com.dts.freefireth
 }
 ff > /dev/null 2>&1  
 echo "Success☑️" 
