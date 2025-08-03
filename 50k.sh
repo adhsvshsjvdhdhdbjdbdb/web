@@ -1,6 +1,4 @@
 #!/system/bin/sh
-wm size reset
-wm density reset
 dev=grapfifa
 refresh_rate=$(dumpsys SurfaceFlinger | grep "refresh-rate" | awk '{printf("%d ", $3)}')
 brand=$(getprop ro.product.brand)
