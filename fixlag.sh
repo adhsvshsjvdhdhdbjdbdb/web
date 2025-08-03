@@ -1,6 +1,4 @@
 #!/system/bin/sh
-wm size reset
-wm density reset
 DIVIDER="─────────────◇─────────────────────◇─────────────"
 SECTION_DIV="────────────────────────★────────────────────────"
 PROGRESS_DIV="──────➤ "
