@@ -1,7 +1,5 @@
 #!/system/bin/sh
 # Định nghĩa các biến giao diện
-wm size reset
-wm density reset
 DIVIDER="=========================================="
 SECTION_DIV="=========================================="
 PROGRESS_DIV="--> "
