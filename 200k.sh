@@ -1,6 +1,4 @@
 #!/system/bin/sh
-wm size reset
-wm density reset
 # Định nghĩa các biến giao diện
 WIDTH=60
 BOX_TOP="+----------------------------------------------------------+"
