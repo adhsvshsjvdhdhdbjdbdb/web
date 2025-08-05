@@ -8,6 +8,14 @@
   "price": "100"
 },
   {
+  "key": "vantien",
+  "android_id": "177920c55af3cb56",
+  "serial": "R92X30H84XJ",
+  "android_version": "14",
+  "manufacturer": "samsung",
+  "price": "20"
+},
+  {
   "key": "dmanh",
   "android_id": "ff4188c2ebc22b15",
   "serial": "iv4tr4jbd6irdmci",
