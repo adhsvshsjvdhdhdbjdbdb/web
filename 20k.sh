@@ -510,6 +510,8 @@ settings put global PERF_RES_FPS_FPSGO_LLF_TH 100
  settings put global PERF_RES_FPS_FBT_RESCUE_SECOND_TIME 1
  settings put global PERF_RES_FPS_FBT_RESCUE_SECOND_ENABLE 1
  settings put global PERF_RES_FPS_FBT_GCC_FPS_MARGIN 120
+ cmd game set --fps 120 --mode 2 --downscale 0.8 com.dts.freefiremax
+cmd game set --fps 120 --mode 2 --downscale 0.8 com.dts.freefireth
 }
 game > /dev/null 2>&1  
 echo "└───────────────────────┘"
