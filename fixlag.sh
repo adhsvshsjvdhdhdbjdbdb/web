@@ -968,9 +968,10 @@ settings put global low_latency_inputenabled 1
 settings put system pointer_speed 7
 settings put system gesture_sensitivity 2
 settings put system scroll.smoothness 1
-settings put secure double_tap_timeout 200
-settings put secure multi_press_timeout 300
 settings put secure long_press_timeout 350
+settings put secure multi_press_timeout 250
+settings put secure key_press_timeout 200
+settings put secure double_tap_timeout 150
 settings put system touch.size.scale 1
 settings put global window_animation_scale 0.5
 settings put global transition_animation_scale 0.5
