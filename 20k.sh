@@ -54,7 +54,90 @@ for i in $(seq 1 5); do
   printf "│ [%-5s] %3d%% │\n" "$BAR$EMPTY" "$PERCENT"
   sleep 0.2
 done
+calc_duration() {
+    echo "scale=0; $1 * $2 / 1" | bc
+}
+calc_duration > /dev/null 2>&1  
 
+# Lấy refresh rate, làm tròn về số nguyên
+refresh_rate=$(dumpsys SurfaceFlinger 2>/dev/null | grep -m 1 "refresh-rate" \
+  | awk -F': ' '{print $2}' | awk '{print int($1+0.5)}')
+
+# nếu không lấy được refresh rate
+if [ -z "$refresh_rate" ]; then
+    echo "Lỗi: không thể lấy được Refresh Rate của máy, Đặt mặc định 60hz"
+    refresh_rate=60
+fi
+
+echo "Refresh Rate hiện tại: ${refresh_rate}Hz"
+
+# Tính frame time (nanosecond cho 1 frame)
+frame_ns=$(echo "scale=0; 1000000000 / $refresh_rate" | bc)
+
+# Các hệ số timing
+early_app_factor=0.48
+early_sf_factor=0.26
+earlyGl_app_factor=0.42
+earlyGl_sf_factor=0.22
+late_app_factor=0.08
+late_sf_factor=0.06
+min_hwc_factor=0.05
+
+# Tính duration
+early_app=$(calc_duration "$frame_ns" "$early_app_factor")
+early_sf=$(calc_duration "$frame_ns" "$early_sf_factor")
+earlyGl_app=$(calc_duration "$frame_ns" "$earlyGl_app_factor")
+earlyGl_sf=$(calc_duration "$frame_ns" "$earlyGl_sf_factor")
+late_app=$(calc_duration "$frame_ns" "$late_app_factor")
+late_sf=$(calc_duration "$frame_ns" "$late_sf_factor")
+min_hwc=$(calc_duration "$frame_ns" "$min_hwc_factor")
+
+# Phase offset (âm)
+early_app_phase=$(echo "-$early_app" | bc)
+early_sf_phase=$(echo "-$early_sf" | bc)
+earlyGl_app_phase=$(echo "-$earlyGl_app" | bc)
+earlyGl_phase=$(echo "-$earlyGl_sf" | bc)
+late_app_phase=$(echo "-$late_app" | bc)
+late_sf_phase=$(echo "-$late_sf" | bc)
+fps() {
+# Danh sách property cần set
+fps_props=(
+  "debug.sf.early.app.duration $early_app"
+  "debug.sf.early.sf.duration $early_sf"
+  "debug.sf.earlyGl.app.duration $earlyGl_app"
+  "debug.sf.earlyGl.sf.duration $earlyGl_sf"
+  "debug.sf.late.app.duration $late_app"
+  "debug.sf.late.sf.duration $late_sf"
+  "debug.sf.high_fps.early.app.duration $early_app"
+  "debug.sf.high_fps.early.sf.duration $early_sf"
+  "debug.sf.high_fps.earlyGl.app.duration $earlyGl_app"
+  "debug.sf.high_fps.earlyGl.sf.duration $earlyGl_sf"
+  "debug.sf.high_fps.late.app.duration $late_app"
+  "debug.sf.high_fps.late.sf.duration $late_sf"
+  "debug.sf.high_fps.hwc.min.duration $min_hwc"
+  "debug.sf.early_app_phase_offset_ns $early_app_phase"
+  "debug.sf.early_sf_phase_offset_ns $early_sf_phase"
+  "debug.sf.early_gl_app_phase_offset_ns $earlyGl_app_phase"
+  "debug.sf.early_gl_phase_offset_ns $earlyGl_phase"
+  "debug.sf.late_app_phase_offset_ns $late_app_phase"
+  "debug.sf.late_sf_phase_offset_ns $late_sf_phase"
+  "debug.sf.high_fps_early_app_phase_offset_ns $early_app_phase"
+  "debug.sf.high_fps_early_sf_phase_offset_ns $early_sf_phase"
+  "debug.sf.high_fps_early_gl_app_phase_offset_ns $earlyGl_app_phase"
+  "debug.sf.high_fps_early_gl_phase_offset_ns $earlyGl_phase"
+  "debug.sf.high_fps_late_app_phase_offset_ns $late_app_phase"
+  "debug.sf.high_fps_late_sf_phase_offset_ns $late_sf_phase"
+)
+
+echo "🎯 Tối ưu SurfaceFlinger Giúp giảm drop khung hình."
+# Set từng prop
+for prop in "${fps_props[@]}"; do
+  echo $prop
+done
+
+echo "Done."
+}
+fps > /dev/null 2>&1  
 tweaks() {
     disable_log=(
         "log.tag.AF::MmapTrack V"
